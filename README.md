@@ -13,9 +13,9 @@ Indonesia has 19.5 million Twitter users from a total of 500 million global user
 ##### How To Run
 - Create new database with name "skripsiasbuch"
 - Import skripsiasbuch.sql to your new database
-- Python app.py
+- Type in terminal "Python app.py"
 - Login 
-Username: admin
-Password: admin
+-- Username: admin
+-- Password: admin
 
 
