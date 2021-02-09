@@ -8,7 +8,6 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css'>
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css">
     <style>
         #dashboard {
             display: flex;
@@ -146,7 +145,6 @@
             padding-left: 0px;
         }
     </style>
-
 </head>
 
 <body>
@@ -164,11 +162,11 @@
             </div>
 
             <ul class="menu">
-                <li>
+                <li class="active">
                     <a href="/">
                         <i class="fas fa-folder"></i> Dashboard</a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="dataset">
                         <i class="fas fa-chalkboard"></i> Dataset</a>
                 </li>
@@ -195,17 +193,28 @@
         <!-- Page content -->
         <div id="page-content" class="col-10">
             <div style="padding:25px">
-                <div class="logo">DATASET PILKADA KOTA MEDAN 2020
-                    <br>IMPORT DATASET</div>
+                <div class="logo">ANALISIS SENTIMEN PADA PILKADA KOTA MEDAN 2020 DI TWITTER MENGGUNAKAN PEMBOBOTAN TF-IDF (TERM FREQUENCY AND INVERSE DOCUMENT FREQUENCY) DAN METODE MULTILAYER PERCEPTRON</div>
+                <div style="margin-top:25px;font-size:1.5em">Petunjuk Penggunaan :</div>
+                <div style="margin-top:25px">
+                    <p>1. Hal pertama yang dilakukan adalah menyiapkan dataset berupa text dan sentimen dari text tersebut bersifat
+                        positif atau negatif, kemudian menyimpan data tersebut ke dalam file excel dengan row berjudul text
+                        dan sentimen sesuai dengan gambar di bawah. </p>
+                    <img style="width:720px;height:420px;margin-bottom:15px" src="{{url_for('static', filename='c1.jpg')}}">
+                    <p>2. Selanjutnya masuk pada halaman dataset, pilih file excel yang berisi dataset tersebut untuk dilakukan
+                        proses import, setelah berhasil melakukan proses import maka data akan tersimpan dalam database.</p>
+                    <p>3. Proses berikutnya adalah text processing untuk menghilangkan elemen yang tidak diperlukan pada teks
+                        twitter, tekan tombol text processing kemudian data yang ada di database akan dilakukan processing
+                        text.
+                    </p>
+                    <p>4. Keempat adalah halaman klasifikasi di mana adalah halaman untuk menampilkan hasil klasifikasi dari
+                        pembagian dataset di mana pembagian dilakukan dengan rasio 0.5 atau 50% dan diacak dengan random
+                        state sebesar 45, sehingga didapatkan data training yang digunakan untuk training model sejumlah
+                        setengah dari keseluruhan dataset dan data validasi sejumlah setengah dari keseluruhan dataset juga.</p>
+                    <p>5. Terakhir adalah halaman pengujian di mana dilakukan uji akurasi dengan menggunakan confusion matrix
+                        berdasarkan data uji validasi.</p>
 
-                <div style="margin-top:40px">
-                    <form method="POST" action="/importdataset" enctype="multipart/form-data" style="display:flex;flex-direction:column">
-                        <input id="fileimport" name="file" class="mb-3" required type="file">
-                        <input type="submit" name="Import" value="Import" class="btn btn-secondary mb-3" id="klikimport">
-
-                    </form>
-                    <table id="table" data-search=true data-height="500" data-pagination="true" style="background-color:white;color:black"></table>
                 </div>
+
             </div>
         </div>
         <!-- End page content -->
@@ -213,27 +222,5 @@
     <!-- partial -->
 
 </body>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>
-<script>
-    let data = {{ data| safe}}
-
-    $('#table').bootstrapTable({
-        columns: [{
-            field: 'no',
-            title: "No"
-        }, {
-            field: 'text',
-            title: 'Text'
-        }, {
-            field: 'sentimen',
-            title: 'Sentimen'
-        }],
-        data: data
-    })
-</script>
-<script>
-
-</script>
 
 </html>

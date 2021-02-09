@@ -168,7 +168,7 @@
                     <a href="/">
                         <i class="fas fa-folder"></i> Dashboard</a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="dataset">
                         <i class="fas fa-chalkboard"></i> Dataset</a>
                 </li>
@@ -180,7 +180,7 @@
                     <a href="klasifikasi">
                         <i class="fas fa-laptop"></i>Klasifikasi</a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="pengujian">
                         <i class="fas fa-laptop"></i>Pengujian</a>
                 </li>
@@ -195,20 +195,17 @@
         <!-- Page content -->
         <div id="page-content" class="col-10">
             <div style="padding:25px">
-                <div class="logo">DATASET PILKADA KOTA MEDAN 2020
-                    <br>IMPORT DATASET</div>
-
-                <div style="margin-top:40px">
-                    <form method="POST" action="/importdataset" enctype="multipart/form-data" style="display:flex;flex-direction:column">
-                        <input id="fileimport" name="file" class="mb-3" required type="file">
-                        <input type="submit" name="Import" value="Import" class="btn btn-secondary mb-3" id="klikimport">
-
-                    </form>
-                    <table id="table" data-search=true data-height="500" data-pagination="true" style="background-color:white;color:black"></table>
+                <div class="logo" style="margin-bottom:80px">HASIL PENGUJIAN DAN AKURASI DENGAN MATRIK KONFUSI</div>
+                <div class="form-group">
+                    <h4 style="margin-bottom:25px">Akurasi</h4>
+                    <input id="akurasididapat" type="text" class="form-control" readonly>
                 </div>
+                <h4 style="margin-top:50px;margin-bottom:25px">Confusion Matrix</h4>
+                <table id="table" data-height="150" style="background-color:white;color:black"></table>
             </div>
         </div>
-        <!-- End page content -->
+    </div>
+    <!-- End page content -->
     </div>
     <!-- partial -->
 
@@ -216,21 +213,27 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>
 <script>
-    let data = {{ data| safe}}
+    let data = {{ cmatrix| safe}}
+
+    total = (data[0].actualtrue + data[1].actualfalse) / (data[0].actualtrue + data[0].actualfalse + data[1].actualtrue + data[1].actualfalse);
+    t = `${total * 100}%`
+
+    document.querySelectorAll("#akurasididapat")[0].value = t;
 
     $('#table').bootstrapTable({
         columns: [{
-            field: 'no',
-            title: "No"
+            field: 'kosong',
+            title: ""
         }, {
-            field: 'text',
-            title: 'Text'
+            field: 'actualtrue',
+            title: 'Predicted True'
         }, {
-            field: 'sentimen',
-            title: 'Sentimen'
+            field: 'actualfalse',
+            title: 'Predicted False'
         }],
         data: data
     })
+
 </script>
 <script>
 

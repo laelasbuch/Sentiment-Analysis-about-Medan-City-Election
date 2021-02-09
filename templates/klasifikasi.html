@@ -168,7 +168,7 @@
                     <a href="/">
                         <i class="fas fa-folder"></i> Dashboard</a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="dataset">
                         <i class="fas fa-chalkboard"></i> Dataset</a>
                 </li>
@@ -176,7 +176,7 @@
                     <a href="textprocessing">
                         <i class="fas fa-file"></i>Text Processing</a>
                 </li>
-                <li>
+                <li class="active">
                     <a href="klasifikasi">
                         <i class="fas fa-laptop"></i>Klasifikasi</a>
                 </li>
@@ -195,20 +195,13 @@
         <!-- Page content -->
         <div id="page-content" class="col-10">
             <div style="padding:25px">
-                <div class="logo">DATASET PILKADA KOTA MEDAN 2020
-                    <br>IMPORT DATASET</div>
-
-                <div style="margin-top:40px">
-                    <form method="POST" action="/importdataset" enctype="multipart/form-data" style="display:flex;flex-direction:column">
-                        <input id="fileimport" name="file" class="mb-3" required type="file">
-                        <input type="submit" name="Import" value="Import" class="btn btn-secondary mb-3" id="klikimport">
-
-                    </form>
-                    <table id="table" data-search=true data-height="500" data-pagination="true" style="background-color:white;color:black"></table>
-                </div>
+                <div class="logo" style="margin-bottom:80px">KLASIFIKASI PILKADA KOTA MEDAN 2020
+                    <br>PEMBAGIAN DATA LATIH 70% & DATA UJI 30% DENGAN RANDOM_STATE 45</div>
+                <table id="table" data-search=true data-height="500" data-pagination="true" style="background-color:white;color:black"></table>
             </div>
         </div>
-        <!-- End page content -->
+    </div>
+    <!-- End page content -->
     </div>
     <!-- partial -->
 
@@ -217,6 +210,8 @@
 <script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>
 <script>
     let data = {{ data| safe}}
+
+
 
     $('#table').bootstrapTable({
         columns: [{
