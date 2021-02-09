@@ -1,1 +1,48 @@
+<!DOCTYPE html>
+<html style="width:100%;height:100%;padding:0px;margin:0px;">
 
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Analisis Sentimen Twitter TF-IDF ANN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Logo_of_North_Sumatra_University.svg/1200px-Logo_of_North_Sumatra_University.svg.png">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+</head>
+
+<body style="width:100%;height:100%;padding:0px;margin:0px;">
+    <div style="width:100%;height:100%;background-image: url(static/bg_login.png);padding:0px;margin:0px;display:flex;align-items:center;justify-content:center">
+        <form method="POST" action="/" style="padding:25px">
+            <div style="text-align:center;padding:15px;color:rgb(13, 158, 255);font-size:2em;font-family: Arial, Helvetica, sans-serif;"></div>
+            <div style="padding:5px;margin-top:15px">
+                <input style="padding:10px;width:300px" name="username" placeholder="Username" type="text">
+            </div>
+            <div style="padding:5px;margin-top:15px">
+                <input style="padding:10px;width:300px" name="password" placeholder="Password" type="password">
+            </div>
+            <div style="display:flex;flex-direction:row;justify-content:space-between;padding:5px;margin-top:15px">
+                
+                <input type="submit" name="Login" value="Login" style="padding:10px;width:100px;">
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+    document.querySelectorAll("#btncancel")[0].addEventListener("click", (e) => {
+        e.preventDefault();
+        document.querySelectorAll("input").forEach((e) => {
+            if (e.value !== "Login") {
+                e.value = "";
+            }
+
+        })
+    })
+
+    let error = '{{ err }}'
+    {%if err %}
+    alert(error)
+    {% endif %} 
+</script>
+
+</html>

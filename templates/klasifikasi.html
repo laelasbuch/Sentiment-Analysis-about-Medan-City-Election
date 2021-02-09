@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Analisis Sentimen Twitter TF-IDF ANN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css'>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.css">
+    <style>
+        #dashboard {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #sidebar {
+            padding-top: 10px;
+            background-color: #15191C;
+            color: #FFF;
+            min-height: 100vh;
+        }
+
+        #page-content {
+            padding-top: 10px;
+            background-color: #1B2125;
+            color: #FFF;
+        }
+
+        .logo {
+            display: block;
+            text-align: center;
+            font-weight: bold;
+            color: #FFF;
+            font-size: 22px;
+        }
+
+        .user-info {
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .user-info img {
+            display: block;
+            margin: 0 auto;
+            width: 82px;
+            height: 82px;
+            object-fit: cover;
+        }
+
+        .user-info h3 {
+            margin-top: 20px;
+            margin-bottom: 0px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .user-rank {
+            display: block;
+            color: #727882;
+            text-align: center;
+        }
+
+        .status-online {
+            z-index: 1;
+            display: block;
+            position: relative;
+            bottom: 2px;
+            right: 40%;
+            background-color: lightgreen;
+            width: 8px;
+            height: 8px;
+            border-radius: 100%;
+        }
+
+        /* Menu */
+
+        .menu {
+            padding-left: 0px;
+        }
+
+        .menu i {
+            width: 25px;
+            text-align: center;
+            color: #59626d;
+            margin-right: 10px;
+        }
+
+        .menu li {
+            list-style-type: none;
+            padding: 15px 6px;
+        }
+
+        .menu li a {
+            padding-left: 13px;
+            color: #59626D;
+            font-weight: bold;
+            transition: all .5s;
+        }
+
+        .menu li a:hover {
+            border-left: 3px solid #0581DD;
+            text-decoration: none;
+            color: #FFF;
+            padding-left: 10px;
+            transition: all .1s;
+        }
+
+        .menu li a:hover>i {
+            color: #0581DD;
+            transition: all .5s;
+        }
+
+        .menu .active a {
+            color: #FFF;
+            border-left: 3px solid #0581DD;
+            padding-left: 10px;
+        }
+
+        .menu .active a>i {
+            color: #0581DD;
+        }
+
+        /* Search */
+
+        .search-form {
+            background-color: #2D333A;
+            border: none;
+            color: #5F6671;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+
+        footer {
+            display: inline-block;
+            margin-top: 40px;
+        }
+
+        .footer-links li {
+            list-style-type: none;
+        }
+
+        .footer-links {
+            padding-left: 0px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- partial:index.partial.html -->
+    <div id="dashboard">
+        <!-- Sidebar -->
+        <div id="sidebar" class="col-2" style="padding-top:50px">
+            <a href="#" class="logo">ANALISIS SENTIMEN</a>
+
+            <div class="user-info">
+                <span class="status-online"></span>
+                <img src="{{url_for('static',filename='pp.jpg')}}" class="rounded-circle" />
+                <h3>Muntaqim Asbuch</h3>
+                <span class="user-rank">151401090</span>
+            </div>
+
+            <ul class="menu">
+                <li>
+                    <a href="/">
+                        <i class="fas fa-folder"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="dataset">
+                        <i class="fas fa-chalkboard"></i> Dataset</a>
+                </li>
+                <li>
+                    <a href="textprocessing">
+                        <i class="fas fa-file"></i>Text Processing</a>
+                </li>
+                <li class="active">
+                    <a href="klasifikasi">
+                        <i class="fas fa-laptop"></i>Klasifikasi</a>
+                </li>
+                <li>
+                    <a href="pengujian">
+                        <i class="fas fa-laptop"></i>Pengujian</a>
+                </li>
+                <li>
+                    <a href="keluar">
+                        <i class="fas fa-chalkboard"></i>Keluar</a>
+                </li>
+            </ul>
+        </div>
+        <!-- End Sidebar -->
+
+        <!-- Page content -->
+        <div id="page-content" class="col-10">
+            <div style="padding:25px">
+                <div class="logo" style="margin-bottom:80px">KLASIFIKASI PILKADA KOTA MEDAN 2020
+                    <br>PEMBAGIAN DATA LATIH 70% & DATA UJI 30% DENGAN RANDOM_STATE 45</div>
+                <table id="table" data-search=true data-height="500" data-pagination="true" style="background-color:white;color:black"></table>
+            </div>
+        </div>
+    </div>
+    <!-- End page content -->
+    </div>
+    <!-- partial -->
+
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://unpkg.com/bootstrap-table@1.17.1/dist/bootstrap-table.min.js"></script>
+<script>
+    let data = {{ data| safe}}
+
+
+
+    $('#table').bootstrapTable({
+        columns: [{
+            field: 'no',
+            title: "No"
+        }, {
+            field: 'text',
+            title: 'Text'
+        }, {
+            field: 'sentimen',
+            title: 'Sentimen'
+        }],
+        data: data
+    })
+</script>
+<script>
+
+</script>
+
+</html>
